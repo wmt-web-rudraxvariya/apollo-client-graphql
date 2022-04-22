@@ -46,6 +46,11 @@ const PostCard = ({ item, i, refetch }) => {
     }
   };
   const handleComment = () => {
+    const UName = getCookie("UName");
+    item.comments.some((item) => {
+      console.log(item);
+      console.log(UName);
+    });
     setComm(!comm);
   };
   const checkLike = () => {
@@ -55,12 +60,10 @@ const PostCard = ({ item, i, refetch }) => {
     });
     return likedPost;
   };
-  const checkComment = () => {
+  const checkComment = (commentName) => {
     const UName = getCookie("UName");
-    const CPost = item.comments.some((item) => {
-      return item?.username === UName;
-    });
-    return CPost;
+
+    return commentName === UName;
   };
 
   const handleUserComment = (id) => {
@@ -321,7 +324,7 @@ const PostCard = ({ item, i, refetch }) => {
                           </div>
                           <span className="text-sm">{comment.body}</span>
                         </div>
-                        {checkComment() && (
+                        {checkComment(comment.username) && (
                           <div>
                             <button
                               type="button"
